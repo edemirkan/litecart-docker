@@ -1,0 +1,10 @@
+name: Build and Publish image to GHCR (Nightly)
+
+on:
+  schedule:
+    - cron: '36 2 * * *'
+
+jobs:
+  build-publish:
+    name: Build and Publish image to GHCR
+    uses: ./.github/workflows/build-publish.yml

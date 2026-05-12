@@ -1,12 +1,8 @@
-name: Build and Deploy container to GHCR
+name: Build and Publish image to GHCR
 
 on:
-  # schedule:
-  #   - cron: '36 2 * * *'
   push:
-    branches: ["develop"]
-    # Publish semver tags as releases.
-    tags: ["v*.*.*"]
+    branches: ["main"]
   workflow_dispatch:
 
 env:
