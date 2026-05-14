@@ -3,10 +3,13 @@ set -e
 
 APP_DIR=/litecart-app
 APACHE_HTML_DIR=/var/www/html
+
+echo "Copying application files to Apache directory..."
 rsync -a --delete ${APP_DIR}/ ${APACHE_HTML_DIR}/public_html/
 
+echo "Setting permissions for Apache directory..."
 # Set correct permissions
-RUN chown -R www-data:www-data ${APACHE_HTML_DIR}/public_html \
+chown -R www-data:www-data ${APACHE_HTML_DIR}/public_html \
     && chmod -R 755 ${APACHE_HTML_DIR}/public_html \
     && chmod -R 775 ${APACHE_HTML_DIR}/public_html/cache \
     && chmod -R 775 ${APACHE_HTML_DIR}/public_html/data \
@@ -14,4 +17,5 @@ RUN chown -R www-data:www-data ${APACHE_HTML_DIR}/public_html \
     && chmod -R 775 ${APACHE_HTML_DIR}/public_html/logs \
     && chmod -R 755 ${APACHE_HTML_DIR}/public_html/vmods
 
+echo "Starting Apache server..."
 exec apache2-foreground
