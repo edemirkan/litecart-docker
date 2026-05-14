@@ -5,7 +5,7 @@ APP_DIR=/litecart-app
 APACHE_HTML_DIR=/var/www/html
 
 echo "Copying application files to Apache directory..."
-rsync -a --delete ${APP_DIR}/ ${APACHE_HTML_DIR}/public_html/
+rsync -a --delete --exclude 'config.inc.php' ${APP_DIR}/ ${APACHE_HTML_DIR}/public_html/
 
 echo "Setting permissions for Apache directory..."
 # Set correct permissions
