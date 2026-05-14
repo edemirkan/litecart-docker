@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libcurl4-openssl-dev \
     rsync \
+    locales \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
         gd \
@@ -48,6 +49,15 @@ COPY public_html/ /litecart-app/
 # Copy entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Generate the desired locale
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen
+
+# 3. Set environment variables
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8
 
 EXPOSE 80
 
