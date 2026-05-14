@@ -33,9 +33,9 @@ jobs:
           branch_name=${{ github.ref_name }}
 
           if [[ "$branch_name" != "main" ]]; then
-            echo "release_tag=${release_tag}-${branch_name}" >> $GITHUB_OUTPUT
+            release_tag="${release_tag}-${branch_name}"
           fi
-          
+
           echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
 
       - name: Checkout litecart repository
