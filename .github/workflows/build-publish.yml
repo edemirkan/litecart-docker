@@ -2,7 +2,7 @@ name: Build and Publish image to GHCR
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "dev"]
   workflow_dispatch:
   workflow_call:
 
@@ -28,7 +28,15 @@ jobs:
 
       - name: Read version from RELEASE_TAG file
         id: release_tag
-        run: echo "release_tag=$(cat RELEASE_TAG)" >> $GITHUB_OUTPUT
+        run: |
+          release_tag=$(cat RELEASE_TAG)
+          branch_name=${{ github.ref_name }}
+
+          if [[ "$branch_name" != "main" ]]; then
+            echo "release_tag=${release_tag}-${branch_name}" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
 
       - name: Checkout litecart repository
         uses: actions/checkout@v6 # v6.0.2

@@ -42,20 +42,11 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN sed -ri -e 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
 # Copy application files
-COPY public_html/ /var/www/html/public_html/
+COPY public_html/ /litecart-app/
 
 # Copy entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
-# Set correct permissions
-RUN chown -R www-data:www-data /var/www/html/public_html \
-    && chmod -R 755 /var/www/html/public_html \
-    && chmod -R 775 /var/www/html/public_html/cache \
-    && chmod -R 775 /var/www/html/public_html/data \
-    && chmod -R 775 /var/www/html/public_html/images \
-    && chmod -R 775 /var/www/html/public_html/logs \
-    && chmod -R 755 /var/www/html/public_html/vmods
 
 EXPOSE 80
 
