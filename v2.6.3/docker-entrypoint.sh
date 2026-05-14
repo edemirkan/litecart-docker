@@ -3,7 +3,7 @@ set -e
 
 APP_DIR=/litecart-app
 APACHE_HTML_DIR=/var/www/html
-rsync -avh --delete ${APP_DIR}/ ${APACHE_HTML_DIR}/public_html/
+rsync -a --delete ${APP_DIR}/ ${APACHE_HTML_DIR}/public_html/
 
 # Set correct permissions
 RUN chown -R www-data:www-data ${APACHE_HTML_DIR}/public_html \
